@@ -37,7 +37,7 @@ namespace Cadastro_Escolar.View
             txtNome.Enabled = true;
             cbCurso.Enabled = true;
             cbMateria.Enabled = true;
-            cbID.Enabled = true;
+            Cd.Enabled = true;
             txtSalario.Enabled = true;
             BtnEscolher.Enabled = true;
             txtEmail.Enabled = true;
@@ -56,7 +56,7 @@ namespace Cadastro_Escolar.View
             txtNome.Enabled = false;
             cbCurso.Enabled = false;
             cbMateria.Enabled = false;
-            cbID.Enabled = false;
+            Cd.Enabled = false;
             txtSalario.Enabled = false;
             BtnEscolher.Enabled = false;
             txtEmail.Enabled = false;
@@ -76,7 +76,7 @@ namespace Cadastro_Escolar.View
             txtNome.Text = "";
             cbCurso.Text = "";
             cbMateria.Text = "";
-            cbID.Text = "";
+            Cd.Text = "";
             txtSalario.Text = "";
             pbFoto.Image = null;
             txtEmail.Text = "";
@@ -115,6 +115,7 @@ namespace Cadastro_Escolar.View
 
         private void btnIncluir_Click(object sender, EventArgs e)
         {
+
             Professor dados = new Professor();
             Editar(dados);
             LimparCampos();
@@ -125,38 +126,36 @@ namespace Cadastro_Escolar.View
         {
             try
             {
-                //MemoryStream ms = new MemoryStream();
-                //if (pbFoto.Image != null)
-                //{
-                //    pbFoto.Image.Save(ms, pbFoto.Image.RawFormat);
-                //}
-                //else
-                //{
-                //    MessageBox.Show("Insira uma imagem");
-                //    return;
-                //}
-                //byte[] img = ms.ToArray();
+                MemoryStream ms = new MemoryStream();
+                if (pbFoto.Image != null)
+                {
+                    pbFoto.Image.Save(ms, pbFoto.Image.RawFormat);
+                }
+                else
+                {
+                    MessageBox.Show("Insira uma imagem");
+                    return;
+                }
+                byte[] img = ms.ToArray();
 
-
+                dado.Id_professor = Convert.ToInt32(cbIDP.SelectedValue);
                 dado.Nome = txtNome.Text;
                 dado.Curso = cbCurso.Text;
+                dado.Materia = cbMateria.Text;
+                dado.Salario = txtSalario.Text;
+                dado.EstadoCivil = cbEstadoCivil.Text;
+                dado.Genero = cbGenero.Text;
+                dado.DataNascimento = DateTime.Parse(dtProfessor.Text);
+                dado.Email = txtEmail.Text;
+                dado.Telefone = txtTelefone.Text;
+                dado.Foto = img;
+                dado.Cep = txtCEP.Text;
+                dado.Estado = cbEstado.Text;
+                dado.Cidade = cbCidade.Text;
+                dado.Endereco = txtEndereco.Text;
+
+
                 model.Editar(dado);
-
-
-
-                //dado.Materia = cbMateria.Text;
-                //dado.Salario = txtSalario.Text;
-                //dado.EstadoCivil = cbEstadoCivil.Text;
-                //dado.Genero = cbGenero.Text;
-                //dado.DataNascimento = DateTime.Parse(dtProfessor.Text);
-                //dado.Email = txtEmail.Text;
-                //dado.Telefone = txtTelefone.Text;
-                //dado.Foto = img;
-                //dado.Id_professor = Convert.ToInt32(cbID.SelectedValue);
-                //dado.Cep = Convert.ToInt32(txtCEP.Text);
-                //dado.Estado = cbEstado.Text;
-                //dado.Cidade = cbCidade.Text;
-                //dado.Endereco = txtEndereco.Text;
 
                 MessageBox.Show("Dados Editados com Sucesso!");
                 Atualizar();
@@ -193,6 +192,17 @@ namespace Cadastro_Escolar.View
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {
+
+            if (Verificacoes.IsValidEmail(txtEmail.Text))
+            {
+
+            }
+            else
+            {
+                MessageBox.Show("Email Inválido");
+            }
+
+
             Professor dados = new Professor();
             Salvar(dados);
             DesabilitarCampos();
@@ -227,8 +237,8 @@ namespace Cadastro_Escolar.View
                 dado.Email = txtEmail.Text;
                 dado.Telefone = txtTelefone.Text;
                 dado.Foto = img;
-                dado.Id_professor = Convert.ToInt32(cbID.SelectedValue);
-                dado.Cep = Convert.ToInt32(txtCEP.Text);
+                dado.Id_professor = Convert.ToInt32(Cd.SelectedValue);
+                dado.Cep = txtCEP.Text;
                 dado.Estado = cbEstado.Text;
                 dado.Cidade = cbCidade.Text;
                 dado.Endereco = txtEndereco.Text;
@@ -282,9 +292,9 @@ namespace Cadastro_Escolar.View
         {
             try
             {
-                if (cbID.SelectedValue != null)
+                if (Cd.SelectedValue != null)
                 {
-                    DataRowView rowView = (DataRowView)cbID.SelectedItem;
+                    DataRowView rowView = (DataRowView)Cd.SelectedItem;
 
 
                     string cursoNome = Convert.ToString(rowView["nome"]);
@@ -312,11 +322,11 @@ namespace Cadastro_Escolar.View
             Listar();
 
             #region CarregarComboBox ID
-            cbID.DataSource = modelCurso.Listar();
-            cbID.ValueMember = "id";
-            cbID.DisplayMember = "nome";
-            cbID.DropDownStyle = ComboBoxStyle.DropDown;
-            cbID.DropDownHeight = cbID.ItemHeight * 5;
+            Cd.DataSource = modelCurso.Listar();
+            Cd.ValueMember = "id";
+            Cd.DisplayMember = "nome";
+            Cd.DropDownStyle = ComboBoxStyle.DropDown;
+            Cd.DropDownHeight = Cd.ItemHeight * 5;
             #endregion
 
             #region CarregarComboBox Estado e Cidade
@@ -337,7 +347,7 @@ namespace Cadastro_Escolar.View
 
             #region CarregarComboBox Curso e Materia
             cbCurso.DataSource = modelCurso.Listar();
-            cbCurso.DropDownHeight = cbID.ItemHeight * 5;
+            cbCurso.DropDownHeight = Cd.ItemHeight * 5;
             cbCurso.ValueMember = "id";
             cbCurso.DisplayMember = "nome";
             cbCurso.SelectedIndex = -1;
@@ -352,7 +362,7 @@ namespace Cadastro_Escolar.View
             #region CarregarComboBox ID
             cbIDP.Text = "";
             cbIDP.DataSource = model.Listar();
-            cbIDP.DropDownStyle = ComboBoxStyle.DropDown;
+            cbIDP.DropDownStyle = ComboBoxStyle.DropDownList;
             cbIDP.DropDownHeight = cbIDP.ItemHeight * 5;
             cbIDP.ValueMember = "Id";
             cbIDP.DisplayMember = "Id";
@@ -360,16 +370,16 @@ namespace Cadastro_Escolar.View
 
             Atualizar();
 
-            cbID.Text = "";
-            cbID.DropDownStyle = ComboBoxStyle.DropDown;
-            cbID.DropDownHeight = cbID.ItemHeight * 5;
+            Cd.Text = "";
+            Cd.DropDownStyle = ComboBoxStyle.DropDownList;
+            Cd.DropDownHeight = Cd.ItemHeight * 5;
             cbMateria.DisplayMember = "nome";
             cbMateria.ValueMember = "MateriaId";
             cbMateria.Text = "";
 
         }
 
-
+        #region textChanged
         private void cbID_TextChanged(object sender, EventArgs e)
         {
             Professor dados = new Professor();
@@ -385,6 +395,7 @@ namespace Cadastro_Escolar.View
             cbMateria.DataSource = materiasDoCurso;
         }
 
+        #endregion
         private void grid_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             btnSalvar.Enabled = false;
@@ -420,7 +431,7 @@ namespace Cadastro_Escolar.View
         {
 
             grid.DataSource = model.Listar();
-            grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
             grid.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCells;
             grid.Columns[0].Visible = false;
             grid.Columns[1].HeaderText = "Nome";
@@ -446,26 +457,30 @@ namespace Cadastro_Escolar.View
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            cbID.Text = "";
+            Cd.Text = "";
             Atualizar();
         }
 
         private void txtNome_TextChanged(object sender, EventArgs e)
         {
-            string text = txtNome.Text;
-            while (Verificacoes.VerificaNumeroOuCaracterEspecial(text))
+            string originalText = txtNome.Text;
+            string modifiedText = originalText;
+
+            while (Verificacoes.VerificaNumeroOuCaracterEspecial(modifiedText))
             {
+                modifiedText = Regex.Replace(modifiedText, @"\d", "");
+                modifiedText = Regex.Replace(modifiedText, @"[^\w\s]", "");
 
-                text = Regex.Replace(text, @"\d", "");
+                if (modifiedText == originalText)
+                    break;
 
-                text = Regex.Replace(text, @"[^\w\s]", "");
-
-                txtNome.Text = text;
-                txtNome.SelectionStart = text.Length;
+                originalText = modifiedText;
             }
 
-
+            txtNome.Text = modifiedText;
+            txtNome.SelectionStart = modifiedText.Length;
         }
+
 
         private void txtSalario_TextChanged(object sender, EventArgs e)
         {
@@ -490,21 +505,6 @@ namespace Cadastro_Escolar.View
             DataTable cidadesDoEstado = modelCidade.BuscarCidade(estadoId);
             cbCidade.DataSource = cidadesDoEstado;
 
-
-        }
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void label8_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label12_Click(object sender, EventArgs e)
-        {
 
         }
     }

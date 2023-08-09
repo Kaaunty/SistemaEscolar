@@ -149,7 +149,7 @@ namespace GUI_V_2
 
         private void button5_Click(object sender, EventArgs e)
         {
-            AbrirFormEnPanel(new CadastrarNotas());
+            AbrirFormEnPanel(new CadastroNotas());
             //
             btnCadastrarAluno.Enabled = true;
             btnCadastrarAluno.BackColor = Color.FromArgb(39, 57, 80);

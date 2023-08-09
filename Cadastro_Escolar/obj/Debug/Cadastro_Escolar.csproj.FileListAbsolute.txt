@@ -206,14 +206,13 @@ C:\Users\Dell\Desktop\Projeto\CadastroAluno-main\Cadastro_Escolar\obj\Debug\GUI_
 C:\Users\Dell\Desktop\Projeto\CadastroAluno-main\Cadastro_Escolar\obj\Debug\Cadastro_Escolar.CadastroAluno.resources
 C:\Users\Dell\Desktop\Projeto\CadastroAluno-main\Cadastro_Escolar\obj\Debug\Cadastro_Escolar.Properties.Resources.resources
 C:\Users\Dell\Desktop\Projeto\CadastroAluno-main\Cadastro_Escolar\obj\Debug\Cadastro_Escolar.View.CadastroProfessor.resources
-C:\Users\Dell\Desktop\Projeto\CadastroAluno-main\Cadastro_Escolar\obj\Debug\Cadastro_Escolar.TelaPrincipal.resources
 C:\Users\Dell\Desktop\Projeto\CadastroAluno-main\Cadastro_Escolar\obj\Debug\Cadastro_Escolar.csproj.GenerateResource.cache
 C:\Users\Dell\Desktop\Projeto\CadastroAluno-main\Cadastro_Escolar\obj\Debug\Cadastro_Escolar.csproj.CoreCompileInputs.cache
 C:\Users\Dell\Desktop\Projeto\CadastroAluno-main\Cadastro_Escolar\obj\Debug\Cadastro_Escolar.csproj.CopyComplete
 C:\Users\Dell\Desktop\Projeto\CadastroAluno-main\Cadastro_Escolar\obj\Debug\Cadastro_Escolar.exe
 C:\Users\Dell\Desktop\Projeto\CadastroAluno-main\Cadastro_Escolar\obj\Debug\Cadastro_Escolar.pdb
 C:\Users\Dell\Desktop\Projeto\CadastroAluno-main\Cadastro_Escolar\obj\Debug\Cadastro_Escolar.View.VisualizarAluno.resources
-C:\Users\Dell\Desktop\Projeto\CadastroAluno-main\Cadastro_Escolar\obj\Debug\Cadastro_Escolar.View.CadastrarNotas.resources
 C:\Users\Dell\Desktop\Projeto\CadastroAluno-main\Cadastro_Escolar\obj\Debug\Cadastro_Escolar.View.VisualizarNotas.resources
 C:\Users\Dell\Desktop\Projeto\CadastroAluno-main\Cadastro_Escolar\obj\Debug\FlatLoginWatermark.FormLogin.resources
 C:\Users\Dell\Desktop\Projeto\CadastroAluno-main\Cadastro_Escolar\bin\Debug\Microsoft.VisualBasic.PowerPacks.Vs.dll
+C:\Users\Dell\Desktop\Projeto\CadastroAluno-main\Cadastro_Escolar\obj\Debug\Cadastro_Escolar.View.CadastroNotas.resources

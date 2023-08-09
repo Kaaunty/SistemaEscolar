@@ -28,6 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.ofD = new System.Windows.Forms.OpenFileDialog();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
@@ -40,7 +43,7 @@
             this.txtNome = new System.Windows.Forms.TextBox();
             this.txtEmail = new System.Windows.Forms.TextBox();
             this.btnEditar = new System.Windows.Forms.Button();
-            this.cbID = new System.Windows.Forms.ComboBox();
+            this.Cd = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.txtSalario = new System.Windows.Forms.TextBox();
@@ -48,7 +51,6 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.txtCEP = new System.Windows.Forms.TextBox();
             this.cbMateria = new System.Windows.Forms.ComboBox();
             this.label13 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -64,13 +66,14 @@
             this.label14 = new System.Windows.Forms.Label();
             this.cbIDP = new System.Windows.Forms.ComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.pbFoto = new System.Windows.Forms.PictureBox();
-            this.BtnEscolher = new System.Windows.Forms.Button();
+            this.txtCEP = new System.Windows.Forms.MaskedTextBox();
             this.grid = new System.Windows.Forms.DataGridView();
+            this.BtnEscolher = new System.Windows.Forms.Button();
+            this.pbFoto = new System.Windows.Forms.PictureBox();
             this.button1 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbFoto)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbFoto)).BeginInit();
             this.SuspendLayout();
             // 
             // ofD
@@ -208,19 +211,19 @@
             this.btnEditar.UseVisualStyleBackColor = true;
             this.btnEditar.Click += new System.EventHandler(this.btnIncluir_Click);
             // 
-            // cbID
+            // Cd
             // 
-            this.cbID.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.cbID.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbID.Font = new System.Drawing.Font("Berlin Sans FB", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbID.FormattingEnabled = true;
-            this.cbID.ItemHeight = 18;
-            this.cbID.Location = new System.Drawing.Point(207, 273);
-            this.cbID.MaxDropDownItems = 5;
-            this.cbID.Name = "cbID";
-            this.cbID.Size = new System.Drawing.Size(229, 26);
-            this.cbID.TabIndex = 36;
-            this.cbID.TextChanged += new System.EventHandler(this.cbID_TextChanged);
+            this.Cd.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.Cd.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.Cd.Font = new System.Drawing.Font("Berlin Sans FB", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Cd.FormattingEnabled = true;
+            this.Cd.ItemHeight = 18;
+            this.Cd.Location = new System.Drawing.Point(207, 273);
+            this.Cd.MaxDropDownItems = 5;
+            this.Cd.Name = "Cd";
+            this.Cd.Size = new System.Drawing.Size(229, 26);
+            this.Cd.TabIndex = 36;
+            this.Cd.TextChanged += new System.EventHandler(this.cbID_TextChanged);
             // 
             // label4
             // 
@@ -300,16 +303,6 @@
             this.label5.TabIndex = 38;
             this.label5.Text = "Materia:";
             // 
-            // txtCEP
-            // 
-            this.txtCEP.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.txtCEP.Enabled = false;
-            this.txtCEP.Font = new System.Drawing.Font("Berlin Sans FB", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCEP.Location = new System.Drawing.Point(520, 10);
-            this.txtCEP.Name = "txtCEP";
-            this.txtCEP.Size = new System.Drawing.Size(259, 25);
-            this.txtCEP.TabIndex = 49;
-            // 
             // cbMateria
             // 
             this.cbMateria.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -353,7 +346,6 @@
             this.label8.Size = new System.Drawing.Size(78, 23);
             this.label8.TabIndex = 42;
             this.label8.Text = "Genero:";
-            this.label8.Click += new System.EventHandler(this.label8_Click);
             // 
             // label12
             // 
@@ -365,7 +357,6 @@
             this.label12.Size = new System.Drawing.Size(194, 23);
             this.label12.TabIndex = 46;
             this.label12.Text = "Data de Nascimento:";
-            this.label12.Click += new System.EventHandler(this.label12_Click);
             // 
             // cbEstadoCivil
             // 
@@ -485,6 +476,7 @@
             // 
             this.cbIDP.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.cbIDP.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbIDP.Enabled = false;
             this.cbIDP.Font = new System.Drawing.Font("Berlin Sans FB", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbIDP.FormattingEnabled = true;
             this.cbIDP.Location = new System.Drawing.Point(520, 234);
@@ -499,6 +491,7 @@
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.txtCEP);
             this.panel1.Controls.Add(this.grid);
             this.panel1.Controls.Add(this.BtnEscolher);
             this.panel1.Controls.Add(this.cbIDP);
@@ -516,7 +509,6 @@
             this.panel1.Controls.Add(this.label6);
             this.panel1.Controls.Add(this.label13);
             this.panel1.Controls.Add(this.cbMateria);
-            this.panel1.Controls.Add(this.txtCEP);
             this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.label7);
@@ -524,7 +516,7 @@
             this.panel1.Controls.Add(this.txtSalario);
             this.panel1.Controls.Add(this.label9);
             this.panel1.Controls.Add(this.label4);
-            this.panel1.Controls.Add(this.cbID);
+            this.panel1.Controls.Add(this.Cd);
             this.panel1.Controls.Add(this.btnEditar);
             this.panel1.Controls.Add(this.txtEmail);
             this.panel1.Controls.Add(this.txtNome);
@@ -540,19 +532,58 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1035, 585);
             this.panel1.TabIndex = 55;
-            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
-            // pbFoto
+            // txtCEP
             // 
-            this.pbFoto.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.pbFoto.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pbFoto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbFoto.Location = new System.Drawing.Point(785, 10);
-            this.pbFoto.Name = "pbFoto";
-            this.pbFoto.Size = new System.Drawing.Size(219, 210);
-            this.pbFoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pbFoto.TabIndex = 30;
-            this.pbFoto.TabStop = false;
+            this.txtCEP.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.txtCEP.Enabled = false;
+            this.txtCEP.Font = new System.Drawing.Font("Berlin Sans FB", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCEP.Location = new System.Drawing.Point(520, 11);
+            this.txtCEP.Mask = "00000-999";
+            this.txtCEP.Name = "txtCEP";
+            this.txtCEP.Size = new System.Drawing.Size(259, 25);
+            this.txtCEP.TabIndex = 74;
+            // 
+            // grid
+            // 
+            this.grid.AllowUserToAddRows = false;
+            this.grid.AllowUserToDeleteRows = false;
+            this.grid.AllowUserToResizeColumns = false;
+            this.grid.AllowUserToResizeRows = false;
+            this.grid.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.grid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.grid.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllHeaders;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.grid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.grid.DefaultCellStyle = dataGridViewCellStyle2;
+            this.grid.Location = new System.Drawing.Point(27, 310);
+            this.grid.Name = "grid";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.grid.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.grid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.grid.Size = new System.Drawing.Size(969, 262);
+            this.grid.TabIndex = 37;
+            this.grid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grid_CellClick);
             // 
             // BtnEscolher
             // 
@@ -566,26 +597,22 @@
             this.BtnEscolher.UseVisualStyleBackColor = true;
             this.BtnEscolher.Click += new System.EventHandler(this.BtnEscolherP_Click);
             // 
-            // grid
+            // pbFoto
             // 
-            this.grid.AllowUserToAddRows = false;
-            this.grid.AllowUserToDeleteRows = false;
-            this.grid.AllowUserToResizeColumns = false;
-            this.grid.AllowUserToResizeRows = false;
-            this.grid.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.grid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-            this.grid.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllHeaders;
-            this.grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.grid.Location = new System.Drawing.Point(27, 310);
-            this.grid.Name = "grid";
-            this.grid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.grid.Size = new System.Drawing.Size(969, 262);
-            this.grid.TabIndex = 37;
-            this.grid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grid_CellClick);
+            this.pbFoto.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.pbFoto.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pbFoto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pbFoto.Location = new System.Drawing.Point(785, 10);
+            this.pbFoto.Name = "pbFoto";
+            this.pbFoto.Size = new System.Drawing.Size(219, 210);
+            this.pbFoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbFoto.TabIndex = 30;
+            this.pbFoto.TabStop = false;
             // 
             // button1
             // 
             this.button1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.button1.BackgroundImage = global::Cadastro_Escolar.Properties.Resources.Refresh_icon;
             this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.button1.Location = new System.Drawing.Point(27, 273);
             this.button1.Name = "button1";
@@ -608,8 +635,8 @@
             this.Load += new System.EventHandler(this.CadastroProfessor_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbFoto)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbFoto)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -627,7 +654,7 @@
         private System.Windows.Forms.TextBox txtNome;
         private System.Windows.Forms.TextBox txtEmail;
         private System.Windows.Forms.Button btnEditar;
-        private System.Windows.Forms.ComboBox cbID;
+        private System.Windows.Forms.ComboBox Cd;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox txtSalario;
@@ -635,7 +662,6 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox txtCEP;
         private System.Windows.Forms.ComboBox cbMateria;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label6;
@@ -655,5 +681,6 @@
         private System.Windows.Forms.Button BtnEscolher;
         private System.Windows.Forms.DataGridView grid;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.MaskedTextBox txtCEP;
     }
 }

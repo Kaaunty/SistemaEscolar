@@ -41,6 +41,7 @@
             this.linkpass = new System.Windows.Forms.LinkLabel();
             this.btncerrar = new System.Windows.Forms.PictureBox();
             this.btnminimizar = new System.Windows.Forms.PictureBox();
+            this.lblMensagem = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btncerrar)).BeginInit();
@@ -56,7 +57,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(250, 330);
             this.panel1.TabIndex = 0;
-            this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseDown);
             // 
             // pictureBox3
             // 
@@ -138,7 +138,6 @@
             this.label1.Size = new System.Drawing.Size(100, 32);
             this.label1.TabIndex = 4;
             this.label1.Text = "LOGIN";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // btnlogin
             // 
@@ -193,12 +192,24 @@
             this.btnminimizar.TabStop = false;
             this.btnminimizar.Click += new System.EventHandler(this.btnminimizar_Click);
             // 
+            // lblMensagem
+            // 
+            this.lblMensagem.AutoSize = true;
+            this.lblMensagem.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMensagem.Location = new System.Drawing.Point(420, 209);
+            this.lblMensagem.Name = "lblMensagem";
+            this.lblMensagem.Size = new System.Drawing.Size(189, 24);
+            this.lblMensagem.TabIndex = 9;
+            this.lblMensagem.Text = "Preencha os campos";
+            this.lblMensagem.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // FormLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(57)))), ((int)(((byte)(80)))));
             this.ClientSize = new System.Drawing.Size(780, 330);
+            this.Controls.Add(this.lblMensagem);
             this.Controls.Add(this.btnminimizar);
             this.Controls.Add(this.btncerrar);
             this.Controls.Add(this.linkpass);
@@ -209,11 +220,12 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.shapeContainer1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.KeyPreview = true;
             this.Name = "FormLogin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseDown);
+            this.Load += new System.EventHandler(this.FormLogin_Load);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FormLogin_KeyPress);
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btncerrar)).EndInit();
@@ -237,6 +249,7 @@
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.PictureBox btncerrar;
         private System.Windows.Forms.PictureBox btnminimizar;
+        private System.Windows.Forms.Label lblMensagem;
     }
 }
 

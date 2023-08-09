@@ -78,25 +78,23 @@ namespace Cadastro_Escolar.DAO
             try
             {
                 con.AbrirConexao();
-                sql = new MySqlCommand("UPDATE professor SET nome = @nome, curso = @curso WHERE id = @id", con.con);
-                //("UPDATE professor SET nome = @nome,curso = @curso,materia = @materia,salario = @salario,estadoCivil = @estadoCivil,genero = @genero,DataNasicmento = @Datanascimento,email = @email,telefone = @telefone,foto = @foto,id_professor = @professor,cep = @cep,estado = @estado,cidade = @cidade,endereco = @endereco) WHERE id = @id", con.con);
+                sql = new MySqlCommand("UPDATE professor SET nome = @nome, curso = @curso, materia = @materia, salario = @salario , estadoCivil = @estadoCivil, genero = @genero, dataNascimento =@Nascimento,email = @email, telefone = @telefone, foto = @foto," +
+                    " cep = @cep, estado = @estado, cidade = @cidade, endereco = @endereco WHERE id = @professor", con.con);
                 sql.Parameters.AddWithValue("@nome", dado.Nome);
                 sql.Parameters.AddWithValue("@curso", dado.Curso);
-                //sql.Parameters.AddWithValue("@materia", dado.Materia);
-                //sql.Parameters.AddWithValue("@salario", dado.Salario);
-                //sql.Parameters.AddWithValue("@estadoCivil", dado.EstadoCivil);
-                //sql.Parameters.AddWithValue("@genero", dado.Genero);
-                //sql.Parameters.AddWithValue("@Nascimento", dado.DataNascimento);
-                //sql.Parameters.AddWithValue("@email", dado.Email);
-                //sql.Parameters.AddWithValue("@telefone", dado.Telefone);
-                //sql.Parameters.AddWithValue("@foto", dado.Foto);
-                //sql.Parameters.AddWithValue("@professor", dado.Id_professor);
-                //sql.Parameters.AddWithValue("@cep", dado.Cep);
-                //sql.Parameters.AddWithValue("@estado", dado.Estado);
-                //sql.Parameters.AddWithValue("@cidade", dado.Cidade);
-                //sql.Parameters.AddWithValue("@endereco", dado.Endereco);
-                sql.Parameters.AddWithValue("@id", dado.Id);
-
+                sql.Parameters.AddWithValue("@materia", dado.Materia);
+                sql.Parameters.AddWithValue("@salario", dado.Salario);
+                sql.Parameters.AddWithValue("@estadoCivil", dado.EstadoCivil);
+                sql.Parameters.AddWithValue("@genero", dado.Genero);
+                sql.Parameters.AddWithValue("@Nascimento", dado.DataNascimento);
+                sql.Parameters.AddWithValue("@email", dado.Email);
+                sql.Parameters.AddWithValue("@telefone", dado.Telefone);
+                sql.Parameters.AddWithValue("@foto", dado.Foto);
+                sql.Parameters.AddWithValue("@professor", dado.Id_professor);
+                sql.Parameters.AddWithValue("@cep", dado.Cep);
+                sql.Parameters.AddWithValue("@estado", dado.Estado);
+                sql.Parameters.AddWithValue("@cidade", dado.Cidade);
+                sql.Parameters.AddWithValue("@endereco", dado.Endereco);
                 sql.ExecuteNonQuery();
                 sql.Dispose();
 

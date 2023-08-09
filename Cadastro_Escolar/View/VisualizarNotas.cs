@@ -25,7 +25,7 @@ namespace Cadastro_Escolar.View
         {
 
             gridNotas.DataSource = model.Listar();
-            gridNotas.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            gridNotas.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
             gridNotas.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCells;
             gridNotas.Columns[0].Visible = false;
             gridNotas.Columns[1].HeaderText = "Nome";
@@ -35,8 +35,7 @@ namespace Cadastro_Escolar.View
             gridNotas.Columns[5].HeaderText = "Nota 3";
             gridNotas.Columns[6].HeaderText = "Nota 4";
             gridNotas.Columns[7].HeaderText = "Media";
-
-
+            gridNotas.Columns[8].HeaderText = "Professor";
         }
 
 

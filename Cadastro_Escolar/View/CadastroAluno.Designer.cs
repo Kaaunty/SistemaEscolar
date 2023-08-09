@@ -222,6 +222,7 @@
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(259, 25);
             this.txtEmail.TabIndex = 50;
+            this.txtEmail.Leave += new System.EventHandler(this.txtEmail_Leave);
             // 
             // txtNome
             // 
@@ -232,6 +233,7 @@
             this.txtNome.Name = "txtNome";
             this.txtNome.Size = new System.Drawing.Size(174, 25);
             this.txtNome.TabIndex = 24;
+            this.txtNome.TextChanged += new System.EventHandler(this.txtNome_TextChanged);
             // 
             // cbCurso
             // 

@@ -9,35 +9,28 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using GUI_V_2;
+using Cadastro_Escolar.Model;
+using Cadastro_Escolar.Entidades;
+using System.IO;
+using System.Windows.Input;
 
 namespace FlatLoginWatermark
 {
     public partial class FormLogin : Form
     {
+        LoginModel model = new LoginModel();
         public FormLogin()
         {
             InitializeComponent();
         }
 
-        #region Drag Form/ Mover Arrastrar Formulario
-        [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
-        private extern static void ReleaseCapture();
-        [DllImport("user32.DLL", EntryPoint = "SendMessage")]
-        private extern static void SendMessage(System.IntPtr hwnd, int wmsg, int wparam, int lparam);
-        private void Form1_MouseDown(object sender, MouseEventArgs e)
+        public void Limpar()
         {
-            ReleaseCapture();
-            SendMessage(this.Handle, 0x112, 0xf012, 0);
+            txtuser.Text = "";
+            txtpass.Text = "";
+
         }
 
-        private void panel1_MouseDown(object sender, MouseEventArgs e)
-        {
-            ReleaseCapture();
-            SendMessage(this.Handle, 0x112, 0xf012, 0);
-        }
-        #endregion
-
-        #region Placeholder or WaterMark
         private void txtuser_Enter(object sender, EventArgs e)
         {
             if (txtuser.Text == "Usuario")
@@ -76,7 +69,6 @@ namespace FlatLoginWatermark
             }
         }
 
-        #endregion 
 
         private void btncerrar_Click(object sender, EventArgs e)
         {
@@ -88,23 +80,68 @@ namespace FlatLoginWatermark
             this.WindowState = FormWindowState.Minimized;
         }
 
-
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnlogin_Click(object sender, EventArgs e)
         {
-            MenuPrincipal frm = new MenuPrincipal();
-            frm.ShowDialog();
-            this.Hide();
+
+            Login dados = new Login();
+            Logar(dados);
+
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void Logar(Login dado)
+        {
+            try
+            {
+                if (txtuser.Text == "" || txtpass.Text == "")
+                {
+                    lblMensagem.Text = "Preencha os campos";
+                    return;
+                }
+
+                dado.Usuario = txtuser.Text;
+                dado.Senha = txtpass.Text;
+
+
+                dado = model.Logar(dado);
+
+                if (dado.Usuario == null)
+                {
+                    lblMensagem.Text = "Preencha os campos";
+                    lblMensagem.ForeColor = Color.Red;
+                    Limpar();
+                    txtuser.Focus();
+                    return;
+                }
+
+                MenuPrincipal menu = new MenuPrincipal();
+                this.Hide();
+                menu.ShowDialog();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao Logar" + ex.Message);
+                Limpar();
+                txtuser.Focus();
+            }
+
+
+
+        }
+
+        private void FormLogin_Load(object sender, EventArgs e)
         {
 
+            lblMensagem.Text = "";
+        }
+
+        private void FormLogin_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Keys key = (Keys)e.KeyChar;
+            if (key == Keys.Enter)
+            {
+                btnlogin.PerformClick();
+            }
         }
     }
 }

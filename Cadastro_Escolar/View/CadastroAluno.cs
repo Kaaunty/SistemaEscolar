@@ -2,6 +2,7 @@
 using System.Data;
 using System.Drawing;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Cadastro_Escolar.Entidades;
 using Cadastro_Escolar.Model;
@@ -52,6 +53,10 @@ namespace Cadastro_Escolar
             cbMateria.ValueMember = "MateriaId";
             cbMateria.DisplayMember = "nome";
             #endregion
+
+            dtAluno.MinDate = DateTime.Now.AddYears(-60);
+            dtAluno.MaxDate = DateTime.Now.AddYears(-18);
+
 
         }
 
@@ -216,7 +221,7 @@ namespace Cadastro_Escolar
                 dado.EstadoCivil = cbEstadoCivil.Text;
                 dado.Genero = cbGenero.Text;
                 dado.DataNascimento = DateTime.Parse(dtAluno.Text);
-                dado.Cep = Convert.ToInt32(txtCEP.Text);
+                dado.Cep = txtCEP.Text;
                 dado.Estado = cbEstado.Text;
                 dado.Cidade = cbCidade.Text;
                 dado.Endereco = txtEndereco.Text;
@@ -288,7 +293,7 @@ namespace Cadastro_Escolar
                 dado.EstadoCivil = cbEstadoCivil.Text;
                 dado.Genero = cbGenero.Text;
                 dado.DataNascimento = DateTime.Parse(dtAluno.Text);
-                dado.Cep = Convert.ToInt32(txtCEP.Text);
+                dado.Cep = txtCEP.Text;
                 dado.Estado = cbEstado.Text;
                 dado.Cidade = cbCidade.Text;
                 dado.Endereco = txtEndereco.Text;
@@ -465,19 +470,32 @@ namespace Cadastro_Escolar
 
         }
 
+        private void txtNome_TextChanged(object sender, EventArgs e)
+        {
+            string originalText = txtNome.Text;
+            string modifiedText = originalText;
+
+            while (Verificacoes.VerificaNumeroOuCaracterEspecial(modifiedText))
+            {
+                modifiedText = Regex.Replace(modifiedText, @"\d", "");
+                modifiedText = Regex.Replace(modifiedText, @"[^\w\s]", "");
+
+                if (modifiedText == originalText)
+                    break;
+
+                originalText = modifiedText;
+            }
+
+            txtNome.Text = modifiedText;
+            txtNome.SelectionStart = modifiedText.Length;
+        }
+
+
         #endregion
 
+        private void txtEmail_Leave(object sender, EventArgs e)
+        {
 
-        //private void btnBuscar_Click(object sender, EventArgs e)
-        //{
-        //    if (txtBuscar.Text == "")
-        //    {
-        //        MessageBox.Show("Digite um nome para buscar!");
-        //        return;
-        //    }
-        //    Aluno dado = new Aluno();
-        //    dado.Nome = txtBuscar.Text;
-        //    Buscar(dado);
-        //}
+        }
     }
 }

@@ -39,7 +39,8 @@ namespace Cadastro_Escolar.DAO
             try
             {
                 con.AbrirConexao();
-                sql = new MySqlCommand("SELECT materia.*, curso_materia.materiaid FROM curso_materia INNER JOIN materia ON materia.id = curso_materia.materiaid WHERE curso_materia.cursoid = @cursoid;", con.con);
+                sql = new MySqlCommand("SELECT materia.*, curso_materia.materiaid FROM curso_materia " +
+                    "INNER JOIN materia ON materia.id = curso_materia.materiaid WHERE curso_materia.cursoid = @cursoid;", con.con);
 
                 sql.Parameters.AddWithValue("@cursoid", cursoid);
 
