@@ -13,6 +13,8 @@ namespace Cadastro_Escolar
 
     internal class Verificacoes
     {
+
+
         public static bool IsValidEmail(string email)
         {
             try
@@ -25,7 +27,6 @@ namespace Cadastro_Escolar
                 return false;
             }
         }
-
 
 
         public static bool VerificaNumeroOuCaracterEspecial(string text)

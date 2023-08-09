@@ -116,14 +116,20 @@ namespace Cadastro_Escolar.DAO
             {
                 con.AbrirConexao();
                 sql = new MySqlCommand("DELETE FROM professor WHERE id = @id", con.con);
-                sql.Parameters.AddWithValue("@id", dado.Id);
+                sql.Parameters.AddWithValue("@id", dado.Id_professor);
+                sql.ExecuteNonQuery();
+                sql.Dispose();
+
             }
             catch (Exception ex)
             {
 
                 MessageBox.Show("Erro ao excluir os Dados: " + ex.Message);
             }
-
+            finally
+            {
+                con.FecharConexao();
+            }
 
         }
 

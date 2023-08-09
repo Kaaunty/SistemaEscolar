@@ -125,6 +125,8 @@ namespace GUI_V_2
             btnCadastrarNotas.BackColor = Color.FromArgb(39, 57, 80);
             btnVisualizarNotas.Enabled = true;
             btnVisualizarNotas.BackColor = Color.FromArgb(39, 57, 80);
+            btnVisualizarProfessor.Enabled = true;
+            btnVisualizarProfessor.BackColor = Color.FromArgb(39, 57, 80);
             //
             btnCadastrarProfessor.Enabled = false;
             btnCadastrarProfessor.BackColor = Color.FromArgb(12, 61, 92);
@@ -142,6 +144,8 @@ namespace GUI_V_2
             btnCadastrarNotas.BackColor = Color.FromArgb(39, 57, 80);
             btnVisualizarNotas.Enabled = true;
             btnVisualizarNotas.BackColor = Color.FromArgb(39, 57, 80);
+            btnVisualizarProfessor.Enabled = true;
+            btnVisualizarProfessor.BackColor = Color.FromArgb(39, 57, 80);
             //
             btnVisualizarAluno.Enabled = false;
             btnVisualizarAluno.BackColor = Color.FromArgb(12, 61, 92);
@@ -159,6 +163,8 @@ namespace GUI_V_2
             btnVisualizarAluno.BackColor = Color.FromArgb(39, 57, 80);
             btnVisualizarNotas.Enabled = true;
             btnVisualizarNotas.BackColor = Color.FromArgb(39, 57, 80);
+            btnVisualizarProfessor.Enabled = true;
+            btnVisualizarProfessor.BackColor = Color.FromArgb(39, 57, 80);
             //
             btnCadastrarNotas.Enabled = false;
             btnCadastrarNotas.BackColor = Color.FromArgb(12, 61, 92);
@@ -178,9 +184,32 @@ namespace GUI_V_2
             btnVisualizarAluno.BackColor = Color.FromArgb(39, 57, 80);
             btnCadastrarNotas.Enabled = true;
             btnCadastrarNotas.BackColor = Color.FromArgb(39, 57, 80);
+            btnVisualizarProfessor.Enabled = true;
+            btnVisualizarProfessor.BackColor = Color.FromArgb(39, 57, 80);
             //
             btnVisualizarNotas.Enabled = false;
             btnVisualizarNotas.BackColor = Color.FromArgb(12, 61, 92);
+
+        }
+
+        private void btnVisualizarProfessor_Click(object sender, EventArgs e)
+        {
+
+            AbrirFormEnPanel(new VisualizarProfessor());
+            //
+            btnCadastrarAluno.Enabled = true;
+            btnCadastrarAluno.BackColor = Color.FromArgb(39, 57, 80);
+            btnCadastrarProfessor.Enabled = true;
+            btnCadastrarProfessor.BackColor = Color.FromArgb(39, 57, 80);
+            btnVisualizarAluno.Enabled = true;
+            btnVisualizarAluno.BackColor = Color.FromArgb(39, 57, 80);
+            btnCadastrarNotas.Enabled = true;
+            btnCadastrarNotas.BackColor = Color.FromArgb(39, 57, 80);
+            btnVisualizarNotas.Enabled = true;
+            btnVisualizarNotas.BackColor = Color.FromArgb(39, 57, 80);
+            //
+            btnVisualizarProfessor.Enabled = false;
+            btnVisualizarProfessor.BackColor = Color.FromArgb(12, 61, 92);
 
         }
     }

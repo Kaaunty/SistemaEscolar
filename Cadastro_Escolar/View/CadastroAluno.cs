@@ -6,24 +6,23 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Cadastro_Escolar.Entidades;
 using Cadastro_Escolar.Model;
-using Google.Protobuf.WellKnownTypes;
 
 namespace Cadastro_Escolar
 {
     public partial class CadastroAluno : Form
     {
-        #region Argumentos
 
         AlunoModel model = new AlunoModel();
         Random raRandom = new Random();
         CursoModel modelCurso = new CursoModel();
         EstadoModel modelEstado = new EstadoModel();
         CidadeModel modelCidade = new CidadeModel();
-        #endregion
 
         private void CadastroAluno_Load(object sender, EventArgs e)
         {
             Listar();
+
+            #region Carregar Todos Combobox
 
             #region Carregar ComboBox Estado e Cidade
             cbEstado.DataSource = modelEstado.Listar();
@@ -39,7 +38,6 @@ namespace Cadastro_Escolar
             cbCidade.DisplayMember = "nome";
             #endregion
 
-
             #region CarregarComboBox Curso e Materia
             cbCurso.DataSource = modelCurso.Listar();
             cbCurso.DisplayMember = "nome";
@@ -54,10 +52,14 @@ namespace Cadastro_Escolar
             cbMateria.DisplayMember = "nome";
             #endregion
 
-            dtAluno.MinDate = DateTime.Now.AddYears(-60);
-            dtAluno.MaxDate = DateTime.Now.AddYears(-18);
+            #endregion
 
-
+            #region Data Nascimento Aluno
+            dtAluno.CustomFormat = "dd/MM/yyyy";
+            dtAluno.MaxDate = new DateTime(2004, 12, 31);
+            dtAluno.MinDate = new DateTime(1953, 1, 1);
+            dtAluno.Format = DateTimePickerFormat.Custom;
+            #endregion
         }
 
         #region Habilitar, Desabilitar , Limpar, Verifica Campos
@@ -178,12 +180,33 @@ namespace Cadastro_Escolar
         {
             Double value;
             if (Double.TryParse(txtMensalidade.Text, out value))
+            {
                 txtMensalidade.Text = String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C2}", value);
+                if (value <= 499)
+                {
+                    MessageBox.Show("Mensalidade Inválida (Menor que R$ 500)");
+                    txtMensalidade.Text = "";
+                    txtMensalidade.Focus();
+                    return;
+                }
+                if (value >= 10000)
+                {
+                    MessageBox.Show("Mensalidade Inválida (Maior que R$ 10.000)");
+                    txtMensalidade.Text = "";
+                    txtMensalidade.Focus();
+                    return;
+
+                }
+            }
+
             else
                 txtMensalidade.Text = String.Empty;
         }
         private void btnNovo_Click(object sender, EventArgs e)
         {
+            btnSalvar.Enabled = true;
+            btnEditar.Enabled = false;
+            btnExcluir.Enabled = false;
             HabilitarCampos();
             LimparCampos();
             GerarRA();
@@ -191,80 +214,97 @@ namespace Cadastro_Escolar
         }
         private void btnSalvar_Click(object sender, EventArgs e)
         {
+
+            if (Verificacoes.IsValidEmail(txtEmail.Text))
+            {
+
+            }
+            else
+            {
+                MessageBox.Show("Email Inválido");
+                txtEmail.Text = "";
+                txtEmail.Focus();
+                return;
+            }
             Aluno dados = new Aluno();
             Salvar(dados);
+            btnEditar.Enabled = true;
         }
 
         private void Salvar(Aluno dado)
         {
-            try
+            if (VerificarEspaços())
             {
-                MemoryStream ms = new MemoryStream();
-                if (pbFoto.Image != null)
+                try
                 {
-                    pbFoto.Image.Save(ms, pbFoto.Image.RawFormat);
+                    MemoryStream ms = new MemoryStream();
+                    if (pbFoto.Image != null)
+                    {
+                        pbFoto.Image.Save(ms, pbFoto.Image.RawFormat);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Insira uma imagem");
+                        return;
+                    }
+                    byte[] img = ms.ToArray();
+                    dado.Nome = txtNome.Text;
+                    dado.Curso = cbCurso.Text;
+                    dado.Materia = cbMateria.Text;
+                    dado.Mensalidade = txtMensalidade.Text;
+                    dado.EstadoCivil = cbEstadoCivil.Text;
+                    dado.Genero = cbGenero.Text;
+                    dado.DataNascimento = DateTime.Parse(dtAluno.Text);
+                    dado.Cep = txtCEP.Text;
+                    dado.Estado = cbEstado.Text;
+                    dado.Cidade = cbCidade.Text;
+                    dado.Endereco = txtEndereco.Text;
+                    dado.Email = txtEmail.Text;
+                    dado.Telefone = txtTelefone.Text;
+                    dado.Ra = Convert.ToInt32(txtRA.Text);
+                    if (cbSim.Checked)
+                    {
+                        dado.Bolsista = "Sim";
+
+                    }
+                    else
+                    {
+                        dado.Bolsista = "Não";
+                    }
+                    dado.Foto = img;
+
+                    model.Salvar(dado);
+
+                    MessageBox.Show("Dados Salvos com Sucesso!");
                 }
-                else
+                catch (Exception)
                 {
-                    MessageBox.Show("Insira uma imagem");
-                    return;
+                    MessageBox.Show("Erro ao salvar os Dados: Preencha todos os campos");
                 }
-                byte[] img = ms.ToArray();
-
-
-                VerificaCampos();
-
-                dado.Nome = txtNome.Text;
-                dado.Curso = cbCurso.Text;
-                dado.Materia = cbMateria.Text;
-                dado.Mensalidade = txtMensalidade.Text;
-                dado.EstadoCivil = cbEstadoCivil.Text;
-                dado.Genero = cbGenero.Text;
-                dado.DataNascimento = DateTime.Parse(dtAluno.Text);
-                dado.Cep = txtCEP.Text;
-                dado.Estado = cbEstado.Text;
-                dado.Cidade = cbCidade.Text;
-                dado.Endereco = txtEndereco.Text;
-                dado.Email = txtEmail.Text;
-                dado.Telefone = txtTelefone.Text;
-                dado.Ra = Convert.ToInt32(txtRA.Text);
-                if (cbSim.Checked)
+                finally
                 {
-                    dado.Bolsista = "Sim";
-
+                    LimparCampos();
+                    DesabilitarCampos();
+                    Listar();
                 }
-                else
-                {
-                    dado.Bolsista = "Não";
-                }
-                dado.Foto = img;
-
-                model.Salvar(dado);
-
-                MessageBox.Show("Dados Salvos com Sucesso!");
-                LimparCampos();
-                DesabilitarCampos();
-                Listar();
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Erro ao salvar os Dados: Preencha todos os campos");
             }
         }
-
-
         private void btnEditar_Click(object sender, EventArgs e)
         {
-            if (txtRA.Text == "")
+            if (Verificacoes.IsValidEmail(txtEmail.Text))
             {
-                MessageBox.Show("Selecione na tabela um registro para editar!");
+
+            }
+            else
+            {
+                MessageBox.Show("Email Inválido");
+                txtEmail.Text = "";
+                txtEmail.Focus();
                 return;
             }
+
             Aluno dados = new Aluno();
             Editar(dados);
-            LimparCampos();
-            DesabilitarCampos();
-            Listar();
         }
 
         private void Editar(Aluno dado)
@@ -282,8 +322,6 @@ namespace Cadastro_Escolar
                     return;
                 }
                 byte[] img = ms.ToArray();
-
-                VerificaCampos();
 
                 dado.Ra = Convert.ToInt32(txtRA.Text);
                 dado.Nome = txtNome.Text;
@@ -318,6 +356,12 @@ namespace Cadastro_Escolar
             {
                 MessageBox.Show("Erro ao salvar os Dados: " + ex.Message);
             }
+            finally
+            {
+                LimparCampos();
+                DesabilitarCampos();
+                Listar();
+            }
         }
 
         private void btnExcluir_Click(object sender, EventArgs e)
@@ -335,9 +379,6 @@ namespace Cadastro_Escolar
             {
                 Aluno dados = new Aluno();
                 Excluir(dados);
-                LimparCampos();
-                DesabilitarCampos();
-                Listar();
             }
         }
         private void Excluir(Aluno dado)
@@ -352,6 +393,12 @@ namespace Cadastro_Escolar
             {
                 MessageBox.Show("Erro ao excluir os Dados: " + ex.Message);
             }
+            finally
+            {
+                LimparCampos();
+                DesabilitarCampos();
+                Listar();
+            }
         }
         #endregion
 
@@ -361,9 +408,6 @@ namespace Cadastro_Escolar
             int ra = raRandom.Next(1, 2000);
             string rareal = ra.ToString();
             txtRA.Text = rareal;
-
-
-
         }
 
         private void cbSim_CheckedChanged(object sender, EventArgs e)
@@ -380,7 +424,6 @@ namespace Cadastro_Escolar
 
         public void Listar()
         {
-
             gridAluno.DataSource = model.Listar();
             gridAluno.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             gridAluno.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCells;
@@ -423,6 +466,29 @@ namespace Cadastro_Escolar
 
         }
 
+        private void txtNome_TextChanged(object sender, EventArgs e)
+        {
+            string originalText = txtNome.Text;
+            string modifiedText = originalText;
+
+            while (Verificacoes.VerificaNumeroOuCaracterEspecial(modifiedText))
+            {
+                modifiedText = Regex.Replace(modifiedText, @"\d", "");
+                modifiedText = Regex.Replace(modifiedText, @"[^\w\s]", "");
+                modifiedText = modifiedText.Replace("_", "");
+
+                if (modifiedText == originalText)
+                    break;
+
+                originalText = modifiedText;
+            }
+
+            txtNome.Text = modifiedText;
+            txtNome.SelectionStart = modifiedText.Length;
+        }
+
+        #endregion
+
         private void btnAtualizar_Click(object sender, EventArgs e)
         {
             Listar();
@@ -430,7 +496,9 @@ namespace Cadastro_Escolar
 
         private void gridAluno_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            //btnSalvar.Enabled = false;
+            btnSalvar.Enabled = false;
+            btnEditar.Enabled = true;
+            btnExcluir.Enabled = true;
             HabilitarCampos();
             txtRA.Text = gridAluno.CurrentRow.Cells[1].Value.ToString();
             txtNome.Text = gridAluno.CurrentRow.Cells[2].Value.ToString();
@@ -461,41 +529,160 @@ namespace Cadastro_Escolar
                 MemoryStream ms = new MemoryStream(img);
                 pbFoto.Image = Image.FromStream(ms);
             }
-
-
-
             txtCEP.Text = gridAluno.CurrentRow.Cells[14].Value.ToString();
             cbEstado.Text = gridAluno.CurrentRow.Cells[15].Value.ToString();
             cbCidade.Text = gridAluno.CurrentRow.Cells[16].Value.ToString();
-
         }
 
-        private void txtNome_TextChanged(object sender, EventArgs e)
+        private bool VerificarEspaços()
         {
-            string originalText = txtNome.Text;
-            string modifiedText = originalText;
-
-            while (Verificacoes.VerificaNumeroOuCaracterEspecial(modifiedText))
+            if (pbFoto.Image == null)
             {
-                modifiedText = Regex.Replace(modifiedText, @"\d", "");
-                modifiedText = Regex.Replace(modifiedText, @"[^\w\s]", "");
-
-                if (modifiedText == originalText)
-                    break;
-
-                originalText = modifiedText;
+                MessageBox.Show("Selecione uma foto");
+                return false;
+            }
+            if (txtNome.Text == "")
+            {
+                MessageBox.Show("Preencha o campo Nome");
+                txtNome.Focus();
+                return false;
+            }
+            if (cbCurso.SelectedIndex == -1)
+            {
+                MessageBox.Show("Preencha o campo Curso");
+                cbCurso.Focus();
+                return false;
+            }
+            if (cbCurso.Text == "")
+            {
+                MessageBox.Show("Preencha o campo Curso");
+                cbCurso.Focus();
+                return false;
+            }
+            if (cbMateria.SelectedIndex == -1)
+            {
+                MessageBox.Show("Preencha o campo Materia");
+                cbMateria.Focus();
+                return false;
+            }
+            if (cbMateria.Text == "")
+            {
+                MessageBox.Show("Preencha o campo Materia");
+                cbMateria.Focus();
+                return false;
+            }
+            if (cbGenero.SelectedIndex == -1)
+            {
+                MessageBox.Show("Preencha o campo Genero");
+                cbGenero.Focus();
+                return false;
+            }
+            if (cbGenero.Text == "")
+            {
+                MessageBox.Show("Preencha o campo Genero");
+                cbGenero.Focus();
+                return false;
+            }
+            if (cbEstadoCivil.SelectedIndex == -1)
+            {
+                MessageBox.Show("Preencha o campo Estado Civil");
+                cbEstadoCivil.Focus();
+                return false;
+            }
+            if (cbEstadoCivil.Text == "")
+            {
+                MessageBox.Show("Preencha o campo Estado Civil");
+                cbEstadoCivil.Focus();
+                return false;
+            }
+            if (txtNome.Text == "")
+            {
+                MessageBox.Show("Preencha o campo Nome");
+                txtNome.Focus();
+                return false;
+            }
+            if (txtMensalidade.Text == "")
+            {
+                MessageBox.Show("Preencha o campo Salario");
+                txtMensalidade.Focus();
+                return false;
             }
 
-            txtNome.Text = modifiedText;
-            txtNome.SelectionStart = modifiedText.Length;
+            if (txtEmail.Text == "")
+            {
+                MessageBox.Show("Preencha o campo Email");
+                txtEmail.Focus();
+                return false;
+            }
+            if (txtTelefone.TextLength < 14)
+            {
+                MessageBox.Show("Preencha o campo Telefone");
+                txtTelefone.Focus();
+                return false;
+            }
+            if (txtTelefone.Text == "(  )      -")
+            {
+                MessageBox.Show("Preencha o campo Telefone");
+                txtTelefone.Focus();
+                return false;
+            }
+            if (txtCEP.TextLength < 9)
+            {
+                MessageBox.Show("Preencha o campo CEP");
+                txtCEP.Focus();
+                return false;
+            }
+            if (txtCEP.Text == "     -")
+            {
+                MessageBox.Show("Preencha o campo CEP");
+                txtCEP.Focus();
+                return false;
+            }
+            if (cbEstado.SelectedIndex == -1)
+            {
+                MessageBox.Show("Preencha o campo Estado");
+                cbEstado.Focus();
+                return false;
+            }
+            if (cbEstado.Text == "")
+            {
+                MessageBox.Show("Preencha o campo Estado");
+                cbEstado.Focus();
+                return false;
+            }
+            if (cbCidade.SelectedIndex == -1)
+            {
+                MessageBox.Show("Preencha o campo Cidade");
+                cbCidade.Focus();
+                return false;
+            }
+            if (cbCidade.Text == "")
+            {
+                MessageBox.Show("Preencha o campo Cidade");
+                cbCidade.Focus();
+                return false;
+            }
+            if (txtEndereco.Text == "")
+            {
+                MessageBox.Show("Preencha o campo Endereço");
+                txtEndereco.Focus();
+                return false;
+            }
+            if (txtRA.Text == "")
+            {
+                MessageBox.Show("Selecione na tabela um registro para editar!");
+                txtRA.Focus();
+                return false;
+            }
+            return true;
+
         }
 
 
-        #endregion
 
-        private void txtEmail_Leave(object sender, EventArgs e)
-        {
 
-        }
+
+
+
     }
 }

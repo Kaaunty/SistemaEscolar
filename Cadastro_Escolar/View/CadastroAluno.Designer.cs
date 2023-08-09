@@ -50,7 +50,6 @@
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.cbMateria = new System.Windows.Forms.ComboBox();
-            this.txtCEP = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
@@ -70,6 +69,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.btnExcluir = new System.Windows.Forms.Button();
             this.btnEscolherFoto = new System.Windows.Forms.Button();
+            this.txtCEP = new System.Windows.Forms.MaskedTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.gridAluno)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbFoto)).BeginInit();
             this.panel1.SuspendLayout();
@@ -222,7 +222,6 @@
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(259, 25);
             this.txtEmail.TabIndex = 50;
-            this.txtEmail.Leave += new System.EventHandler(this.txtEmail_Leave);
             // 
             // txtNome
             // 
@@ -293,6 +292,7 @@
             // btnAtualizar
             // 
             this.btnAtualizar.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnAtualizar.BackgroundImage = global::Cadastro_Escolar.Properties.Resources.Refresh_icon;
             this.btnAtualizar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnAtualizar.Location = new System.Drawing.Point(92, 326);
             this.btnAtualizar.Name = "btnAtualizar";
@@ -355,16 +355,6 @@
             this.cbMateria.Name = "cbMateria";
             this.cbMateria.Size = new System.Drawing.Size(174, 21);
             this.cbMateria.TabIndex = 39;
-            // 
-            // txtCEP
-            // 
-            this.txtCEP.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.txtCEP.Enabled = false;
-            this.txtCEP.Font = new System.Drawing.Font("Berlin Sans FB", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCEP.Location = new System.Drawing.Point(486, 33);
-            this.txtCEP.Name = "txtCEP";
-            this.txtCEP.Size = new System.Drawing.Size(259, 25);
-            this.txtCEP.TabIndex = 49;
             // 
             // label3
             // 
@@ -433,6 +423,7 @@
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.txtCEP);
             this.panel1.Controls.Add(this.btnAtualizar);
             this.panel1.Controls.Add(this.BtnEscolher);
             this.panel1.Controls.Add(this.txtRA);
@@ -451,7 +442,6 @@
             this.panel1.Controls.Add(this.label6);
             this.panel1.Controls.Add(this.label13);
             this.panel1.Controls.Add(this.cbMateria);
-            this.panel1.Controls.Add(this.txtCEP);
             this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.label7);
@@ -497,6 +487,7 @@
             this.txtRA.Font = new System.Drawing.Font("Berlin Sans FB", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtRA.Location = new System.Drawing.Point(486, 256);
             this.txtRA.Name = "txtRA";
+            this.txtRA.ReadOnly = true;
             this.txtRA.Size = new System.Drawing.Size(89, 25);
             this.txtRA.TabIndex = 77;
             // 
@@ -627,6 +618,17 @@
             this.btnEscolherFoto.UseVisualStyleBackColor = true;
             this.btnEscolherFoto.Click += new System.EventHandler(this.btnEscolherFoto_Click);
             // 
+            // txtCEP
+            // 
+            this.txtCEP.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.txtCEP.Enabled = false;
+            this.txtCEP.Font = new System.Drawing.Font("Berlin Sans FB", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCEP.Location = new System.Drawing.Point(486, 32);
+            this.txtCEP.Mask = "00000-999";
+            this.txtCEP.Name = "txtCEP";
+            this.txtCEP.Size = new System.Drawing.Size(259, 25);
+            this.txtCEP.TabIndex = 78;
+            // 
             // CadastroAluno
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -674,7 +676,6 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.ComboBox cbMateria;
-        private System.Windows.Forms.TextBox txtCEP;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label10;
@@ -694,5 +695,6 @@
         private System.Windows.Forms.GroupBox gbBolsista;
         private System.Windows.Forms.CheckBox cbSim;
         private System.Windows.Forms.TextBox txtRA;
+        private System.Windows.Forms.MaskedTextBox txtCEP;
     }
 }

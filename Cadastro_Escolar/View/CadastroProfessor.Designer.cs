@@ -43,7 +43,7 @@
             this.txtNome = new System.Windows.Forms.TextBox();
             this.txtEmail = new System.Windows.Forms.TextBox();
             this.btnEditar = new System.Windows.Forms.Button();
-            this.Cd = new System.Windows.Forms.ComboBox();
+            this.CBPesquisa = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.txtSalario = new System.Windows.Forms.TextBox();
@@ -64,8 +64,8 @@
             this.txtEndereco = new System.Windows.Forms.TextBox();
             this.cbEstado = new System.Windows.Forms.ComboBox();
             this.label14 = new System.Windows.Forms.Label();
-            this.cbIDP = new System.Windows.Forms.ComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.txtID = new System.Windows.Forms.TextBox();
             this.txtCEP = new System.Windows.Forms.MaskedTextBox();
             this.grid = new System.Windows.Forms.DataGridView();
             this.BtnEscolher = new System.Windows.Forms.Button();
@@ -178,6 +178,7 @@
             this.cbCurso.Size = new System.Drawing.Size(174, 21);
             this.cbCurso.TabIndex = 21;
             this.cbCurso.TextChanged += new System.EventHandler(this.cbCurso_TextChanged);
+            this.cbCurso.Leave += new System.EventHandler(this.cbCurso_Leave);
             // 
             // txtNome
             // 
@@ -209,21 +210,21 @@
             this.btnEditar.TabIndex = 32;
             this.btnEditar.Text = "Editar";
             this.btnEditar.UseVisualStyleBackColor = true;
-            this.btnEditar.Click += new System.EventHandler(this.btnIncluir_Click);
+            this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
             // 
-            // Cd
+            // CBPesquisa
             // 
-            this.Cd.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.Cd.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.Cd.Font = new System.Drawing.Font("Berlin Sans FB", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Cd.FormattingEnabled = true;
-            this.Cd.ItemHeight = 18;
-            this.Cd.Location = new System.Drawing.Point(207, 273);
-            this.Cd.MaxDropDownItems = 5;
-            this.Cd.Name = "Cd";
-            this.Cd.Size = new System.Drawing.Size(229, 26);
-            this.Cd.TabIndex = 36;
-            this.Cd.TextChanged += new System.EventHandler(this.cbID_TextChanged);
+            this.CBPesquisa.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.CBPesquisa.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CBPesquisa.Font = new System.Drawing.Font("Berlin Sans FB", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CBPesquisa.FormattingEnabled = true;
+            this.CBPesquisa.ItemHeight = 18;
+            this.CBPesquisa.Location = new System.Drawing.Point(207, 273);
+            this.CBPesquisa.MaxDropDownItems = 5;
+            this.CBPesquisa.Name = "CBPesquisa";
+            this.CBPesquisa.Size = new System.Drawing.Size(229, 26);
+            this.CBPesquisa.TabIndex = 36;
+            this.CBPesquisa.TextChanged += new System.EventHandler(this.cbID_TextChanged);
             // 
             // label4
             // 
@@ -472,29 +473,15 @@
             this.label14.TabIndex = 72;
             this.label14.Text = "ID:";
             // 
-            // cbIDP
-            // 
-            this.cbIDP.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.cbIDP.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbIDP.Enabled = false;
-            this.cbIDP.Font = new System.Drawing.Font("Berlin Sans FB", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbIDP.FormattingEnabled = true;
-            this.cbIDP.Location = new System.Drawing.Point(520, 234);
-            this.cbIDP.MaxDropDownItems = 5;
-            this.cbIDP.Name = "cbIDP";
-            this.cbIDP.Size = new System.Drawing.Size(61, 26);
-            this.cbIDP.TabIndex = 73;
-            this.cbIDP.TextChanged += new System.EventHandler(this.cbIDP_TextChanged);
-            // 
             // panel1
             // 
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.txtID);
             this.panel1.Controls.Add(this.txtCEP);
             this.panel1.Controls.Add(this.grid);
             this.panel1.Controls.Add(this.BtnEscolher);
-            this.panel1.Controls.Add(this.cbIDP);
             this.panel1.Controls.Add(this.pbFoto);
             this.panel1.Controls.Add(this.label14);
             this.panel1.Controls.Add(this.cbEstado);
@@ -516,7 +503,7 @@
             this.panel1.Controls.Add(this.txtSalario);
             this.panel1.Controls.Add(this.label9);
             this.panel1.Controls.Add(this.label4);
-            this.panel1.Controls.Add(this.Cd);
+            this.panel1.Controls.Add(this.CBPesquisa);
             this.panel1.Controls.Add(this.btnEditar);
             this.panel1.Controls.Add(this.txtEmail);
             this.panel1.Controls.Add(this.txtNome);
@@ -532,6 +519,17 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1035, 585);
             this.panel1.TabIndex = 55;
+            // 
+            // txtID
+            // 
+            this.txtID.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.txtID.Enabled = false;
+            this.txtID.Font = new System.Drawing.Font("Berlin Sans FB", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtID.Location = new System.Drawing.Point(520, 237);
+            this.txtID.Name = "txtID";
+            this.txtID.ReadOnly = true;
+            this.txtID.Size = new System.Drawing.Size(61, 25);
+            this.txtID.TabIndex = 75;
             // 
             // txtCEP
             // 
@@ -553,6 +551,7 @@
             this.grid.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.grid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.grid.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllHeaders;
+            this.grid.BackgroundColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -570,8 +569,9 @@
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.grid.DefaultCellStyle = dataGridViewCellStyle2;
-            this.grid.Location = new System.Drawing.Point(27, 310);
+            this.grid.Location = new System.Drawing.Point(27, 320);
             this.grid.Name = "grid";
+            this.grid.ReadOnly = true;
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -654,7 +654,7 @@
         private System.Windows.Forms.TextBox txtNome;
         private System.Windows.Forms.TextBox txtEmail;
         private System.Windows.Forms.Button btnEditar;
-        private System.Windows.Forms.ComboBox Cd;
+        private System.Windows.Forms.ComboBox CBPesquisa;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox txtSalario;
@@ -675,12 +675,12 @@
         private System.Windows.Forms.TextBox txtEndereco;
         private System.Windows.Forms.ComboBox cbEstado;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.ComboBox cbIDP;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.PictureBox pbFoto;
         private System.Windows.Forms.Button BtnEscolher;
         private System.Windows.Forms.DataGridView grid;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.MaskedTextBox txtCEP;
+        private System.Windows.Forms.TextBox txtID;
     }
 }

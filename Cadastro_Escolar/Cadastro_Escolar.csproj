@@ -201,6 +201,12 @@
     <Compile Include="View\VisualizarNotas.Designer.cs">
       <DependentUpon>VisualizarNotas.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\VisualizarProfessor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\VisualizarProfessor.Designer.cs">
+      <DependentUpon>VisualizarProfessor.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="View\CadastroNotas.resx">
       <DependentUpon>CadastroNotas.cs</DependentUpon>
     </EmbeddedResource>
@@ -231,6 +237,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\VisualizarNotas.resx">
       <DependentUpon>VisualizarNotas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\VisualizarProfessor.resx">
+      <DependentUpon>VisualizarProfessor.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Connected Services\WSCorreio\AtendeClienteService.wsdl" />
     <None Include="Connected Services\WSCorreio\Cadastro_Escolar.WSCorreio.atualizaPagamentoNaEntregaResponse.datasource">

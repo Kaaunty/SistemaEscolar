@@ -216,3 +216,4 @@ C:\Users\Dell\Desktop\Projeto\CadastroAluno-main\Cadastro_Escolar\obj\Debug\Cada
 C:\Users\Dell\Desktop\Projeto\CadastroAluno-main\Cadastro_Escolar\obj\Debug\FlatLoginWatermark.FormLogin.resources
 C:\Users\Dell\Desktop\Projeto\CadastroAluno-main\Cadastro_Escolar\bin\Debug\Microsoft.VisualBasic.PowerPacks.Vs.dll
 C:\Users\Dell\Desktop\Projeto\CadastroAluno-main\Cadastro_Escolar\obj\Debug\Cadastro_Escolar.View.CadastroNotas.resources
+C:\Users\Dell\Desktop\Projeto\CadastroAluno-main\Cadastro_Escolar\obj\Debug\Cadastro_Escolar.View.VisualizarProfessor.resources
