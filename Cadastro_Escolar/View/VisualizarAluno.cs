@@ -1,13 +1,8 @@
 ﻿using Cadastro_Escolar.Model;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Forms;
 
 namespace Cadastro_Escolar.View
@@ -26,8 +21,28 @@ namespace Cadastro_Escolar.View
         {
 
             gridAluno.DataSource = modelAluno.Listar();
+            //Costumização do Grid
             gridAluno.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             gridAluno.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCells;
+            gridAluno.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            gridAluno.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            gridAluno.RowHeadersVisible = false;
+            gridAluno.AllowUserToAddRows = false;
+            gridAluno.AllowUserToDeleteRows = false;
+            gridAluno.AllowUserToResizeColumns = false;
+            gridAluno.AllowUserToResizeRows = false;
+            gridAluno.MultiSelect = false;
+            gridAluno.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            gridAluno.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(238, 239, 249);
+            gridAluno.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            gridAluno.DefaultCellStyle.SelectionBackColor = Color.DarkTurquoise;
+            gridAluno.DefaultCellStyle.SelectionForeColor = Color.WhiteSmoke;
+            gridAluno.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            gridAluno.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            gridAluno.BackgroundColor = Color.White;
+            gridAluno.BorderStyle = BorderStyle.None;
+            gridAluno.ReadOnly = true;
+            //
             gridAluno.Columns[0].Visible = false;
             gridAluno.Columns[1].HeaderText = "RA";
             gridAluno.Columns[2].HeaderText = "Nome";
@@ -57,8 +72,36 @@ namespace Cadastro_Escolar.View
             {
                 byte[] img = (byte[])gridAluno.CurrentRow.Cells[13].Value;
                 MemoryStream ms = new MemoryStream(img);
-                pbFoto.Image = Image.FromStream(ms);
+                pbFoto.Image = System.Drawing.Image.FromStream(ms);
             }
+            gridAluno.CurrentRow.Selected = true;
+            lblRA.Text = gridAluno.CurrentRow.Cells[1].Value.ToString();
+            lblNome.Text = gridAluno.CurrentRow.Cells[2].Value.ToString();
+            lblCurso.Text = gridAluno.CurrentRow.Cells[3].Value.ToString();
+            lblMateria.Text = gridAluno.CurrentRow.Cells[4].Value.ToString();
+            lblBolsista.Text = gridAluno.CurrentRow.Cells[5].Value.ToString();
+            lblMensalidade.Text = gridAluno.CurrentRow.Cells[6].Value.ToString();
+            lblEstadoCivil.Text = gridAluno.CurrentRow.Cells[7].Value.ToString();
+            lblGenero.Text = gridAluno.CurrentRow.Cells[8].Value.ToString();
+            if (DateTime.TryParse(gridAluno.CurrentRow.Cells[9].Value.ToString(), out DateTime data))
+            {
+
+                lblData.Text = data.ToString("dd/MM/yyyy");
+            }
+            lblEndereco.Text = gridAluno.CurrentRow.Cells[10].Value.ToString();
+            lblEmail.Text = gridAluno.CurrentRow.Cells[11].Value.ToString();
+            lblTelefone.Text = gridAluno.CurrentRow.Cells[12].Value.ToString();
+            lblCep.Text = gridAluno.CurrentRow.Cells[14].Value.ToString();
+            lblEstado.Text = gridAluno.CurrentRow.Cells[15].Value.ToString();
+            lblCidade.Text = gridAluno.CurrentRow.Cells[16].Value.ToString();
+
+
+
+
+
+
         }
+
+
     }
 }

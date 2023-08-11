@@ -24,7 +24,7 @@ namespace GUI_V_2
         {
             if (MenuVertical.Width == 250)
             {
-                MenuVertical.Width = 70;
+                MenuVertical.Width = 60;
             }
             else
                 MenuVertical.Width = 250;

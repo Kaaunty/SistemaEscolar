@@ -30,7 +30,7 @@ namespace Cadastro_Escolar.Model
             try
             {
                 con.AbrirConexao();
-                sql = new MySqlCommand("SELECT b.id, a.nome AS nome_aluno, b.disciplina, b.nota1, b.nota2, b.nota3, b.nota4, b.media, p.nome AS nome_professor FROM boletim b INNER JOIN aluno a ON b.id_aluno = a.id INNER JOIN professor p ON b.id_professor = p.id;", con.con);
+                sql = new MySqlCommand("SELECT b.id, a.nome AS nome_aluno, b.disciplina, b.nota1, b.nota2, b.nota3, b.nota4, b.media, p.nome AS nome_professor, b.situacao FROM boletim b INNER JOIN aluno a ON b.id_aluno = a.id INNER JOIN professor p ON b.id_professor = p.id;", con.con);
                 MySqlDataAdapter da = new MySqlDataAdapter();
                 da.SelectCommand = sql;
                 DataTable dt = new DataTable();

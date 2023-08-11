@@ -22,7 +22,7 @@ namespace Cadastro_Escolar.DAO
             try
             {
                 con.AbrirConexao();
-                sql = new MySqlCommand("INSERT INTO boletim (id_aluno, disciplina, nota1, nota2 , nota3 , nota4,media, id_professor ) VALUES (@id_aluno, @id_disciplina, @nota1, @nota2, @nota3, @nota4, @media, @professor)", con.con);
+                sql = new MySqlCommand("INSERT INTO boletim (id_aluno, disciplina, nota1, nota2 , nota3 , nota4,media, id_professor, situacao ) VALUES (@id_aluno, @id_disciplina, @nota1, @nota2, @nota3, @nota4, @media, @professor, @situacao)", con.con);
                 {
                     sql.Parameters.AddWithValue("@id_aluno", dado.IdAluno);
                     sql.Parameters.AddWithValue("@id_disciplina", dado.IdDisciplina);
@@ -32,6 +32,7 @@ namespace Cadastro_Escolar.DAO
                     sql.Parameters.AddWithValue("@nota4", dado.Nota4);
                     sql.Parameters.AddWithValue("@media", dado.Media);
                     sql.Parameters.AddWithValue("@professor", dado.Idprofessor);
+                    sql.Parameters.AddWithValue("@situacao", dado.Situacao);
 
                     sql.ExecuteNonQuery();
                     sql.Dispose();

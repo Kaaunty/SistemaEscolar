@@ -269,6 +269,8 @@
             // painelConteudo
             // 
             this.painelConteudo.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.painelConteudo.BackgroundImage = global::Cadastro_Escolar.Properties.Resources.Blue_and_White_Black_Simple_Registration_Form;
+            this.painelConteudo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.painelConteudo.Controls.Add(this.pictureBox1);
             this.painelConteudo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.painelConteudo.Location = new System.Drawing.Point(250, 45);
@@ -278,6 +280,8 @@
             // 
             // pictureBox1
             // 
+            this.pictureBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox1.Image = global::Cadastro_Escolar.Properties.Resources.Universidade__3_;
             this.pictureBox1.Location = new System.Drawing.Point(225, 2);
             this.pictureBox1.Name = "pictureBox1";
@@ -298,7 +302,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MenuPrincipal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Form1";
+            this.Text = "Menu XD University";
             this.MenuVertical.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.btnlogoInicio)).EndInit();
             this.BarraTitulo.ResumeLayout(false);

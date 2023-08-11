@@ -463,5 +463,32 @@
   <ItemGroup>
     <None Include="Resources\Refresh_icon1.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Blue and White Black Simple Registration Form.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\textboxborder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\notas.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Cadastro Professor UI.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Boletim Escolar UI.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Cadastro Aluno UI.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Design sem nome %282%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Imagem Fundo.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

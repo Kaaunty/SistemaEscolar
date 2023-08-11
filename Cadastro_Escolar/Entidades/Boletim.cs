@@ -16,6 +16,7 @@ namespace Cadastro_Escolar.Entidades
         double nota4;
         double media;
         int idprofessor;
+        string situacao;
 
 
         public int IdAluno { get => idAluno; set => idAluno = value; }
@@ -26,5 +27,6 @@ namespace Cadastro_Escolar.Entidades
         public double Nota4 { get => nota4; set => nota4 = value; }
         public double Media { get => media; set => media = value; }
         public int Idprofessor { get => idprofessor; set => idprofessor = value; }
+        public string Situacao { get => situacao; set => situacao = value; }
     }
 }

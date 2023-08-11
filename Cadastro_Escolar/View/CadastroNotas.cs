@@ -1,13 +1,12 @@
 ﻿using Cadastro_Escolar.Entidades;
 using Cadastro_Escolar.Model;
-using Cadastro_Escolar.WSCorreio;
-using MySql.Data.MySqlClient;
 using System;
-using System.Data.SqlClient;
-using System.Linq.Expressions;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
+using System.Data;
+using System.Drawing;
+using System.IO;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using MySql.Data.MySqlClient;
 
 namespace Cadastro_Escolar.View
 {
@@ -20,6 +19,12 @@ namespace Cadastro_Escolar.View
         {
             InitializeComponent();
             lblMedia.Text = "";
+
+            btnSalvar.FlatAppearance.MouseOverBackColor = btnSalvar.BackColor;
+            btnSalvar.BackColorChanged += (s, e) =>
+            {
+                btnSalvar.FlatAppearance.MouseOverBackColor = btnSalvar.BackColor;
+            };
         }
 
         #region Salvar, Calcular e Limpar
@@ -32,10 +37,18 @@ namespace Cadastro_Escolar.View
                 dado.Idprofessor = Convert.ToInt32(gridAluno.CurrentRow.Cells[3].Value.ToString());
 
                 dado.Nota1 = Convert.ToDouble(txtNota1.Text);
-                dado.Nota2 = Convert.ToDouble(txtNota2.Text);
-                dado.Nota3 = Convert.ToDouble(txtNota3.Text);
-                dado.Nota4 = Convert.ToDouble(txtNota4.Text);
+                dado.Nota2 = Convert.ToDouble(txtNota4.Text);
+                dado.Nota3 = Convert.ToDouble(txtNota2.Text);
+                dado.Nota4 = Convert.ToDouble(txtNota3.Text);
                 dado.Media = Convert.ToDouble(lblMedia.Text);
+                if (dado.Media >= 7)
+                {
+                    dado.Situacao = "Aprovado";
+                }
+                else
+                {
+                    dado.Situacao = "Reprovado";
+                }
 
                 model.Salvar(dado);
                 MessageBox.Show("Dados Salvos com Sucesso!");
@@ -68,9 +81,9 @@ namespace Cadastro_Escolar.View
 
                 if (
                     txtNota1.Text == ""
+                    || txtNota4.Text == ""
                     || txtNota2.Text == ""
                     || txtNota3.Text == ""
-                    || txtNota4.Text == ""
                 )
                 {
                     MessageBox.Show("Digite todas as notas");
@@ -87,7 +100,7 @@ namespace Cadastro_Escolar.View
                     }
 
 
-                    if (!double.TryParse(txtNota2.Text, out nota2) || nota2 < 0 || nota2 > 10)
+                    if (!double.TryParse(txtNota4.Text, out nota2) || nota2 < 0 || nota2 > 10)
                     {
                         MessageBox.Show(
                             "Digite um número de 0 a 10 para a nota 2",
@@ -97,7 +110,7 @@ namespace Cadastro_Escolar.View
                     }
 
 
-                    if (!double.TryParse(txtNota3.Text, out nota3) || nota3 < 0 || nota3 > 10)
+                    if (!double.TryParse(txtNota2.Text, out nota3) || nota3 < 0 || nota3 > 10)
                     {
                         MessageBox.Show(
                             "Digite um número de 0 a 10 para a nota 3",
@@ -107,7 +120,7 @@ namespace Cadastro_Escolar.View
                     }
 
 
-                    if (!double.TryParse(txtNota4.Text, out nota4) || nota4 < 0 || nota4 > 10)
+                    if (!double.TryParse(txtNota3.Text, out nota4) || nota4 < 0 || nota4 > 10)
                     {
                         MessageBox.Show(
                             "Digite um número de 0 a 10 para a nota 4",
@@ -118,7 +131,7 @@ namespace Cadastro_Escolar.View
 
 
                     media = (nota1 + nota2 + nota3 + nota4) / 4;
-                    lblMedia.Text = media.ToString();
+                    lblMedia.Text = media.ToString("N2");
                 }
             }
             catch (FormatException)
@@ -133,9 +146,9 @@ namespace Cadastro_Escolar.View
         {
             //Limpo as variáveis
             txtNota1.Text = "";
+            txtNota4.Text = "";
             txtNota2.Text = "";
             txtNota3.Text = "";
-            txtNota4.Text = "";
             lblMedia.Text = "";
             lblMateria.Text = "";
             lblAluno.Text = "";
@@ -226,8 +239,28 @@ namespace Cadastro_Escolar.View
             gridAluno.Columns.Add("Nome_Professor", "Nome do Professor");
             gridAluno.Columns.Add("Materia_Professor", "Matéria do Professor");
             gridAluno.Columns[5].Visible = false;
-            gridAluno.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            // Costumização do Grid
+            gridAluno.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             gridAluno.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCells;
+            gridAluno.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            gridAluno.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            gridAluno.RowHeadersVisible = false;
+            gridAluno.AllowUserToAddRows = false;
+            gridAluno.AllowUserToDeleteRows = false;
+            gridAluno.AllowUserToResizeColumns = false;
+            gridAluno.AllowUserToResizeRows = false;
+            gridAluno.MultiSelect = false;
+            gridAluno.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            gridAluno.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(238, 239, 249);
+            gridAluno.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            gridAluno.DefaultCellStyle.SelectionBackColor = Color.DarkTurquoise;
+            gridAluno.DefaultCellStyle.SelectionForeColor = Color.WhiteSmoke;
+            gridAluno.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            gridAluno.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            gridAluno.BackgroundColor = Color.White;
+            gridAluno.BorderStyle = BorderStyle.None;
+            gridAluno.ReadOnly = true;
+            //
         }
 
 

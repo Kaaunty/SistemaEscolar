@@ -1,22 +1,29 @@
-﻿using System;
+﻿using Cadastro_Escolar.Entidades;
+using Cadastro_Escolar.Model;
+using System;
 using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using Cadastro_Escolar.Entidades;
-using Cadastro_Escolar.Model;
 
 namespace Cadastro_Escolar
 {
     public partial class CadastroAluno : Form
     {
-
+        #region Variaveis
         AlunoModel model = new AlunoModel();
         Random raRandom = new Random();
         CursoModel modelCurso = new CursoModel();
         EstadoModel modelEstado = new EstadoModel();
         CidadeModel modelCidade = new CidadeModel();
+        #endregion
+
+        public CadastroAluno()
+        {
+            InitializeComponent();
+        }
+
 
         private void CadastroAluno_Load(object sender, EventArgs e)
         {
@@ -63,6 +70,7 @@ namespace Cadastro_Escolar
         }
 
         #region Habilitar, Desabilitar , Limpar, Verifica Campos
+
         public void HabilitarCampos()
         {
             txtNome.Enabled = true;
@@ -155,11 +163,7 @@ namespace Cadastro_Escolar
 
         #endregion
 
-        public CadastroAluno()
-        {
-            InitializeComponent();
-        }
-        #region Escolher Foto ,Novo, Salvar, Editar, Excluir, Pesquisar
+        #region Escolher Foto ,Novo, Salvar, Editar, Excluir, Cancelar, Atualizar
         private void btnEscolherFoto_Click(object sender, EventArgs e)
         {
             try
@@ -168,7 +172,7 @@ namespace Cadastro_Escolar
                 openFileDialog1.Filter = "Image Files | *.jpg; *.jpeg; *.png; ....";
                 if (openFileDialog1.ShowDialog() == DialogResult.OK)
                 {
-                    pbFoto.Image = Image.FromFile(openFileDialog1.FileName);
+                    pbFoto.Image = System.Drawing.Image.FromFile(openFileDialog1.FileName);
                 }
             }
             catch (Exception ex)
@@ -176,59 +180,27 @@ namespace Cadastro_Escolar
                 MessageBox.Show("Não foi possível carregar a imagem: " + ex.Message);
             }
         }
-        private void txtMensalidade_Leave(object sender, EventArgs e)
-        {
-            Double value;
-            if (Double.TryParse(txtMensalidade.Text, out value))
-            {
-                txtMensalidade.Text = String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C2}", value);
-                if (value <= 499)
-                {
-                    MessageBox.Show("Mensalidade Inválida (Menor que R$ 500)");
-                    txtMensalidade.Text = "";
-                    txtMensalidade.Focus();
-                    return;
-                }
-                if (value >= 10000)
-                {
-                    MessageBox.Show("Mensalidade Inválida (Maior que R$ 10.000)");
-                    txtMensalidade.Text = "";
-                    txtMensalidade.Focus();
-                    return;
 
-                }
-            }
-
-            else
-                txtMensalidade.Text = String.Empty;
-        }
         private void btnNovo_Click(object sender, EventArgs e)
         {
             btnSalvar.Enabled = true;
             btnEditar.Enabled = false;
             btnExcluir.Enabled = false;
+            btnNovo.Enabled = false;
+            btnCancelar.Enabled = true;
             HabilitarCampos();
             LimparCampos();
             GerarRA();
             Listar();
         }
+
         private void btnSalvar_Click(object sender, EventArgs e)
         {
-
-            if (Verificacoes.IsValidEmail(txtEmail.Text))
-            {
-
-            }
-            else
-            {
-                MessageBox.Show("Email Inválido");
-                txtEmail.Text = "";
-                txtEmail.Focus();
-                return;
-            }
+            btnEditar.Enabled = true;
+            btnExcluir.Enabled = true;
+            btnNovo.Enabled = true;
             Aluno dados = new Aluno();
             Salvar(dados);
-            btnEditar.Enabled = true;
         }
 
         private void Salvar(Aluno dado)
@@ -259,7 +231,17 @@ namespace Cadastro_Escolar
                     dado.Estado = cbEstado.Text;
                     dado.Cidade = cbCidade.Text;
                     dado.Endereco = txtEndereco.Text;
-                    dado.Email = txtEmail.Text;
+                    if (Verificacoes.IsValidEmail(txtEmail.Text))
+                    {
+                        dado.Email = txtEmail.Text;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Email Inválido");
+                        txtEmail.Text = "";
+                        txtEmail.Focus();
+                        return;
+                    }
                     dado.Telefone = txtTelefone.Text;
                     dado.Ra = Convert.ToInt32(txtRA.Text);
                     if (cbSim.Checked)
@@ -289,20 +271,9 @@ namespace Cadastro_Escolar
                 }
             }
         }
+
         private void btnEditar_Click(object sender, EventArgs e)
         {
-            if (Verificacoes.IsValidEmail(txtEmail.Text))
-            {
-
-            }
-            else
-            {
-                MessageBox.Show("Email Inválido");
-                txtEmail.Text = "";
-                txtEmail.Focus();
-                return;
-            }
-
             Aluno dados = new Aluno();
             Editar(dados);
         }
@@ -335,7 +306,17 @@ namespace Cadastro_Escolar
                 dado.Estado = cbEstado.Text;
                 dado.Cidade = cbCidade.Text;
                 dado.Endereco = txtEndereco.Text;
-                dado.Email = txtEmail.Text;
+                if (Verificacoes.IsValidEmail(txtEmail.Text))
+                {
+                    dado.Email = txtEmail.Text;
+                }
+                else
+                {
+                    MessageBox.Show("Email Inválido");
+                    txtEmail.Text = "";
+                    txtEmail.Focus();
+                    return;
+                }
                 dado.Telefone = txtTelefone.Text;
                 if (cbSim.Checked)
                 {
@@ -366,28 +347,29 @@ namespace Cadastro_Escolar
 
         private void btnExcluir_Click(object sender, EventArgs e)
         {
-            if (txtRA.Text == "")
-            {
-                MessageBox.Show("Selecione na tabela um registro para excluir!");
-                return;
-            }
-            if (MessageBox.Show("Deseja Excluir o Cliente?", "Alerta", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.No)
-            {
-                return;
-            }
-            else
-            {
-                Aluno dados = new Aluno();
-                Excluir(dados);
-            }
+            Aluno dados = new Aluno();
+            Excluir(dados);
         }
+
         private void Excluir(Aluno dado)
         {
             try
             {
-                dado.Ra = Convert.ToInt32(gridAluno.CurrentRow.Cells[1].Value.ToString());
-                model.Excluir(dado);
-                MessageBox.Show("Dados excluido com Sucesso!");
+                if (txtRA.Text == "")
+                {
+                    MessageBox.Show("Selecione na tabela um registro para excluir!");
+                    return;
+                }
+                if (MessageBox.Show("Deseja Excluir o Cliente?", "Alerta", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.No)
+                {
+                    return;
+                }
+                else
+                {
+                    dado.Ra = Convert.ToInt32(gridAluno.CurrentRow.Cells[1].Value.ToString());
+                    model.Excluir(dado);
+                    MessageBox.Show("Dados excluido com Sucesso!");
+                }
             }
             catch (Exception ex)
             {
@@ -400,33 +382,91 @@ namespace Cadastro_Escolar
                 Listar();
             }
         }
-        #endregion
 
-        private void GerarRA()
+        private void btnCancelar_Click(object sender, EventArgs e)
         {
-            raRandom = new Random();
-            int ra = raRandom.Next(1, 2000);
-            string rareal = ra.ToString();
-            txtRA.Text = rareal;
+            btnNovo.Enabled = true;
+            btnSalvar.Enabled = true;
+            btnEditar.Enabled = true;
+            btnExcluir.Enabled = true;
+            LimparCampos();
+            HabilitarCampos();
         }
 
-        private void cbSim_CheckedChanged(object sender, EventArgs e)
+        private void btnAtualizar_Click(object sender, EventArgs e)
         {
-            if (cbSim.Checked == true)
+            Listar();
+        }
+        #endregion
+
+        #region Grid Aluno
+        private void gridAluno_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            btnSalvar.Enabled = false;
+            btnEditar.Enabled = true;
+            btnExcluir.Enabled = true;
+            btnNovo.Enabled = true;
+            btnCancelar.Enabled = true;
+            HabilitarCampos();
+            txtRA.Text = gridAluno.CurrentRow.Cells[1].Value.ToString();
+            txtNome.Text = gridAluno.CurrentRow.Cells[2].Value.ToString();
+            cbCurso.Text = gridAluno.CurrentRow.Cells[3].Value.ToString();
+            cbMateria.Text = gridAluno.CurrentRow.Cells[4].Value.ToString();
+            if (gridAluno.CurrentRow.Cells[5].Value.ToString() == "Sim")
             {
-                txtMensalidade.Enabled = false;
+                cbSim.Checked = true;
+            }
+            txtMensalidade.Text = gridAluno.CurrentRow.Cells[6].Value.ToString();
+            cbEstadoCivil.Text = gridAluno.CurrentRow.Cells[7].Value.ToString();
+            cbGenero.Text = gridAluno.CurrentRow.Cells[8].Value.ToString();
+            if (DateTime.TryParse(gridAluno.CurrentRow.Cells[9].Value.ToString(), out DateTime data))
+            {
+
+                dtAluno.Text = data.ToString("dd/MM/yyyy");
+            }
+            txtEndereco.Text = gridAluno.CurrentRow.Cells[10].Value.ToString();
+            txtEmail.Text = gridAluno.CurrentRow.Cells[11].Value.ToString();
+            txtTelefone.Text = gridAluno.CurrentRow.Cells[12].Value.ToString();
+            if (gridAluno.CurrentRow.Cells[13].Value == DBNull.Value)
+            {
+                pbFoto.Image = null;
             }
             else
             {
-                txtMensalidade.Enabled = true;
+                byte[] img = (byte[])gridAluno.CurrentRow.Cells[13].Value;
+                MemoryStream ms = new MemoryStream(img);
+                pbFoto.Image = System.Drawing.Image.FromStream(ms);
             }
+            txtCEP.Text = gridAluno.CurrentRow.Cells[14].Value.ToString();
+            cbEstado.Text = gridAluno.CurrentRow.Cells[15].Value.ToString();
+            cbCidade.Text = gridAluno.CurrentRow.Cells[16].Value.ToString();
         }
 
         public void Listar()
         {
             gridAluno.DataSource = model.Listar();
+            // Costumização do Grid
             gridAluno.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             gridAluno.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCells;
+            gridAluno.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            gridAluno.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            gridAluno.RowHeadersVisible = false;
+            gridAluno.AllowUserToAddRows = false;
+            gridAluno.AllowUserToDeleteRows = false;
+            gridAluno.AllowUserToResizeColumns = false;
+            gridAluno.AllowUserToResizeRows = false;
+            gridAluno.MultiSelect = false;
+            gridAluno.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            gridAluno.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(238, 239, 249);
+            gridAluno.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            gridAluno.DefaultCellStyle.SelectionBackColor = Color.DarkTurquoise;
+            gridAluno.DefaultCellStyle.SelectionForeColor = Color.WhiteSmoke;
+            gridAluno.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            gridAluno.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            gridAluno.BackgroundColor = Color.White;
+            gridAluno.BorderStyle = BorderStyle.None;
+            gridAluno.ReadOnly = true;
+            //
             gridAluno.Columns[0].Visible = false;
             gridAluno.Columns[1].HeaderText = "RA";
             gridAluno.Columns[2].HeaderText = "Nome";
@@ -446,8 +486,56 @@ namespace Cadastro_Escolar
             gridAluno.Columns[16].Visible = false;
         }
 
+        private void GerarRA()
+        {
+            raRandom = new Random();
+            int ra = raRandom.Next(1, 2000);
+            string rareal = ra.ToString();
+            txtRA.Text = rareal;
+        }
+        #endregion
 
-        #region TextChanged's
+        #region Validações dos textos e dos checkbox
+
+        private void cbSim_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cbSim.Checked == true)
+            {
+                txtMensalidade.Enabled = false;
+            }
+            else
+            {
+                txtMensalidade.Enabled = true;
+            }
+        }
+
+        private void txtMensalidade_Leave(object sender, EventArgs e)
+        {
+            Double value;
+            if (Double.TryParse(txtMensalidade.Text, out value))
+            {
+                txtMensalidade.Text = String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C2}", value);
+                if (value <= 499)
+                {
+                    MessageBox.Show("Mensalidade Inválida (Menor que R$ 500)");
+                    txtMensalidade.Text = "";
+                    txtMensalidade.Focus();
+                    return;
+                }
+                if (value >= 10000)
+                {
+                    MessageBox.Show("Mensalidade Inválida (Maior que R$ 10.000)");
+                    txtMensalidade.Text = "";
+                    txtMensalidade.Focus();
+                    return;
+
+                }
+            }
+
+            else
+                txtMensalidade.Text = String.Empty;
+        }
+
         private void cbCurso_TextChanged(object sender, EventArgs e)
         {
             cbCurso.DisplayMember = "nome";
@@ -485,53 +573,6 @@ namespace Cadastro_Escolar
 
             txtNome.Text = modifiedText;
             txtNome.SelectionStart = modifiedText.Length;
-        }
-
-        #endregion
-
-        private void btnAtualizar_Click(object sender, EventArgs e)
-        {
-            Listar();
-        }
-
-        private void gridAluno_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            btnSalvar.Enabled = false;
-            btnEditar.Enabled = true;
-            btnExcluir.Enabled = true;
-            HabilitarCampos();
-            txtRA.Text = gridAluno.CurrentRow.Cells[1].Value.ToString();
-            txtNome.Text = gridAluno.CurrentRow.Cells[2].Value.ToString();
-            cbCurso.Text = gridAluno.CurrentRow.Cells[3].Value.ToString();
-            cbMateria.Text = gridAluno.CurrentRow.Cells[4].Value.ToString();
-            if (gridAluno.CurrentRow.Cells[5].Value.ToString() == "Sim")
-            {
-                cbSim.Checked = true;
-            }
-            txtMensalidade.Text = gridAluno.CurrentRow.Cells[6].Value.ToString();
-            cbEstadoCivil.Text = gridAluno.CurrentRow.Cells[7].Value.ToString();
-            cbGenero.Text = gridAluno.CurrentRow.Cells[8].Value.ToString();
-            if (DateTime.TryParse(gridAluno.CurrentRow.Cells[9].Value.ToString(), out DateTime data))
-            {
-
-                dtAluno.Text = data.ToString("dd/MM/yyyy");
-            }
-            txtEndereco.Text = gridAluno.CurrentRow.Cells[10].Value.ToString();
-            txtEmail.Text = gridAluno.CurrentRow.Cells[11].Value.ToString();
-            txtTelefone.Text = gridAluno.CurrentRow.Cells[12].Value.ToString();
-            if (gridAluno.CurrentRow.Cells[13].Value == DBNull.Value)
-            {
-                pbFoto.Image = null;
-            }
-            else
-            {
-                byte[] img = (byte[])gridAluno.CurrentRow.Cells[13].Value;
-                MemoryStream ms = new MemoryStream(img);
-                pbFoto.Image = Image.FromStream(ms);
-            }
-            txtCEP.Text = gridAluno.CurrentRow.Cells[14].Value.ToString();
-            cbEstado.Text = gridAluno.CurrentRow.Cells[15].Value.ToString();
-            cbCidade.Text = gridAluno.CurrentRow.Cells[16].Value.ToString();
         }
 
         private bool VerificarEspaços()
@@ -601,9 +642,9 @@ namespace Cadastro_Escolar
                 txtNome.Focus();
                 return false;
             }
-            if (txtMensalidade.Text == "")
+            if (txtMensalidade.Text == "" && cbSim.Checked == false)
             {
-                MessageBox.Show("Preencha o campo Salario");
+                MessageBox.Show("Preencha o campo Mensalidade");
                 txtMensalidade.Focus();
                 return false;
             }
@@ -678,11 +719,7 @@ namespace Cadastro_Escolar
 
         }
 
-
-
-
-
-
+        #endregion
 
     }
 }
